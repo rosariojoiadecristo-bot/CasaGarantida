@@ -1,0 +1,46 @@
+{
+  "name": "casa_garantida",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@gravity-ui/icons": "^2.21.0",
+    "@heroicons/react": "^2.2.0",
+    "@heroui/avatar": "^2.2.26",
+    "@heroui/button": "^2.2.32",
+    "@heroui/dropdown": "^2.3.32",
+    "@heroui/modal": "^2.2.29",
+    "@heroui/navbar": "^2.2.30",
+    "@heroui/react": "^3.2.3",
+    "@heroui/system": "^2.4.28",
+    "@heroui/theme": "^2.4.26",
+    "@heroui/user": "^2.2.26",
+    "@kinde-oss/kinde-auth-nextjs": "^2.11.0",
+    "framer-motion": "^13.0.0",
+    "motion": "^13.4.4",
+    "next": "15.5.23",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-toastify": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.23",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.23",
+    "sharp": "0.35.0"
+  }
+}

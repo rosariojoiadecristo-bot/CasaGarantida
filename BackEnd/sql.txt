@@ -1,0 +1,68 @@
+USE casa_garantida;
+GO
+
+-- Dropar a tabela se já existir (cuidado! Isso apaga todos os dados)
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'usuarios')
+BEGIN
+    DROP TABLE usuarios;
+END
+GO
+
+-- Criar a tabela usuarios
+CREATE TABLE usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    firstName NVARCHAR(100) NOT NULL,
+    lastName NVARCHAR(100) NOT NULL,
+    email NVARCHAR(255) NOT NULL UNIQUE,
+    avatarUrl NVARCHAR(500) NULL
+);
+GO
+
+-- Criar trigger para updatedAt automático
+CREATE TRIGGER trg_usuarios_updatedAt
+ON usuarios
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE usuarios
+    SET updatedAt = GETUTCDATE()
+    FROM usuarios u
+    INNER JOIN inserted i ON u.Id = i.Id;
+END;
+GO
+
+-- Criar índice
+CREATE INDEX IX_usuarios_email ON usuarios(email);
+GO
+
+-- 1. Tabela de Status
+CREATE TABLE propriedadeStatus (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Value NVARCHAR(50) NOT NULL
+);
+
+-- 2. Tabela de Tipos
+CREATE TABLE propriedadeTipo (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Value NVARCHAR(50) NOT NULL
+);
+
+-- 3. Inserir os dados iniciais
+INSERT INTO propriedadeStatus (Value) VALUES ('Disponível'), ('Indisponível'), ('Vendido'), ('Arrendado');
+INSERT INTO propriedadeTipo (Value) VALUES ('T1'), ('T2'), ('T3'), ('T4'), ('T5');
+
+CREATE TABLE propriedade (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Descricao NVARCHAR(MAX),
+    Preco DECIMAL(18, 2) NOT NULL, -- Precisão decimal para valores monetários
+    UserId INT NOT NULL,           -- Dono do imóvel
+    TypeId INT NOT NULL,
+    StatusId INT NOT NULL,
+    
+    -- Estabelecendo as relações
+    CONSTRAINT FK_Propriedades_Usuarios FOREIGN KEY (UserId) REFERENCES usuarios(Id),
+    CONSTRAINT FK_Propriedades_Tipo FOREIGN KEY (TypeId) REFERENCES propriedadeTipo(Id),
+    CONSTRAINT FK_Propriedades_Status FOREIGN KEY (StatusId) REFERENCES propriedadeStatus(Id)
+);

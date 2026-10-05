@@ -1,0 +1,4 @@
+Rodar o C# no vs code:
+cd backend
+cd cruddapper
+dotnet run

@@ -1,0 +1,24 @@
+# === .NET / C# ===
+BackEnd/**/bin/
+BackEnd/**/obj/
+*.user
+*.suo
+.vs/
+
+# === Node / Next.js ===
+node_modules/
+.next/
+out/
+build/
+dist/
+*.log
+#.env
+#.env.local
+.env
+.env.local aa6ffae (commit inicial)
+
+# === IDE / Sistema ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
