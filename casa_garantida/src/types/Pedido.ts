@@ -14,6 +14,7 @@ export interface PedidoDetalhe {
   usuarioId: number;
   usuarioNome: string;
   usuarioEmail: string;
+  usuarioContacto?: string | null;
 
   tipoId: number;
   tipoPedido: TipoPedido;

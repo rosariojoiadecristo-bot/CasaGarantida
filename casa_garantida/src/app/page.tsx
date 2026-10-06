@@ -18,7 +18,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
   // 🔍 Filtrar propriedades pelo nome (com base no 'query')
   const filteredProperties = propriedades.filter((property) =>
-    property.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    property.provincia?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Cálculos de paginação baseados nos itens filtrados

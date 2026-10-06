@@ -21,6 +21,8 @@ const columns = [
   { id: "name", name: "Nome" },
   { id: "preco", name: "Preço" },
   { id: "tipo", name: "Tipo" },
+  { id: "localizacao", name: "Localização" },
+  { id: "provincia", name: "Província" },
   { id: "status", name: "Status" },
   { id: "actions", name: "Ações" },
 ];
@@ -90,7 +92,7 @@ const PropertiesTable = ({ properties }: Props) => {
 
         <Table aria-label="Tabela de propriedades" className="w-full">
           <Table.ScrollContainer className="w-full overflow-x-auto">
-            <Table.Content className="min-w-[700px]">
+            <Table.Content className="w-full">
               <Table.Header className="bg-gray-50">
                 {columns.map((column) => (
                   <Table.Column
@@ -139,6 +141,18 @@ const PropertiesTable = ({ properties }: Props) => {
                       <Table.Cell className="px-6 py-4">
                         <span className="text-gray-600">
                           {property.tipo?.value || "N/A"}
+                        </span>
+                      </Table.Cell>
+
+                      <Table.Cell className="px-6 py-4">
+                        <span className="text-gray-600">
+                          {property.localizacao || "N/A"}
+                        </span>
+                      </Table.Cell>
+
+                      <Table.Cell className="px-6 py-4">
+                        <span className="text-gray-600">
+                          {property.provincia || "N/A"}
                         </span>
                       </Table.Cell>
 

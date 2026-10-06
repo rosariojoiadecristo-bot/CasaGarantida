@@ -6,6 +6,7 @@ interface Usuario {
   lastName: string;
   email: string;
   avatarUrl?: string;
+  contacto1?: number | null;
   tipoUsuarioId: number; // 1 = Administrador, 2 = Gestor, 3 = Cliente
 }
 
@@ -86,7 +87,8 @@ export default async function UsuariosPage() {
                         {usuario.firstName} {usuario.lastName}
                       </h3>
                       <p className="text-sm text-gray-600">{usuario.email}</p>
-                      <span className="text-xs text-gray-400">ID: #{usuario.id}</span>
+                      <span className="text-xs text-gray-400">ID: #{usuario.id} - </span>
+                      <span className="text-xs text-gray-400">Contacto: {usuario.contacto1}</span>
                     </div>
                   </div>
                 );

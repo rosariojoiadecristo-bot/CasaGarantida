@@ -38,7 +38,7 @@ const Search = () => {
                     type="text"
                     onChange={(e) => handleSearch(e.target.value)}
                     defaultValue={defaultValue}
-                    placeholder="Pesquisar propriedade por nome..."
+                    placeholder="Pesquisar propriedade por província..."
                     className="w-full pl-10 pr-4 py-3 bg-white rounded-xl shadow-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all text-sm"
                 />
             </div>

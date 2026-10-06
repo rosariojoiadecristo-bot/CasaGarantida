@@ -14,6 +14,8 @@
 
         public string? UsuarioEmail { get; set; }
 
+        public string? UsuarioContacto { get; set; }
+
         public int TipoId { get; set; }
 
         public string? TipoPedido { get; set; }

@@ -373,6 +373,8 @@ namespace CrudDAPPER.Services.PedidoService
 
                     u.email AS UsuarioEmail,
 
+                    CONCAT_WS(' / ', u.contacto1, u.contacto2) AS UsuarioContacto,
+
                     pe.TipoId,
                     pt.Value AS TipoPedido,
 
