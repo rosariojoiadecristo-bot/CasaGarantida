@@ -8,5 +8,8 @@
         public string email { get; set; } = string.Empty;
         public string avatarUrl { get; set; } = string.Empty;
         public int TipoUsuarioId { get; set; } = 3; // Padrão Cliente
+        public int? contacto1 { get; set; }
+        public int? contacto2 { get; set; }
+        public string? provincia { get; set; }
     }
 }

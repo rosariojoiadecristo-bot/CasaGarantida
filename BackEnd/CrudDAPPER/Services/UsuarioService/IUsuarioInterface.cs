@@ -10,5 +10,6 @@ namespace CrudDAPPER.Services.UsuarioService
         Task<IEnumerable<Usuario>> CreateUsuario(Usuario usuario);
         Task<IEnumerable<Usuario>> UpdateUsuario(Usuario usuario);
         Task<IEnumerable<Usuario>> DeleteUsuario(int usuarioId);
+        Task<bool> AtualizarPerfil( int usuarioId, Usuario usuario );
     }
 }

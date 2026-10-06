@@ -147,5 +147,40 @@ namespace CrudDAPPER.Controllers
 
             return Ok(new { avatarUrl = relativePath });
         }
+
+        [HttpPut("{usuarioId}/perfil")]
+        public async Task<IActionResult> AtualizarPerfil(
+        int usuarioId,
+        [FromBody] Usuario usuario)
+        {
+            if (usuario == null)
+            {
+                return BadRequest("Dados do usuário inválidos.");
+            }
+
+            var usuarioExistente =
+                await this.usuarioInterface.GetUsuarioById(usuarioId);
+
+            if (usuarioExistente == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            var atualizado =
+                await this.usuarioInterface.AtualizarPerfil(
+                    usuarioId,
+                    usuario
+                );
+
+            if (!atualizado)
+            {
+                return BadRequest("Não foi possível atualizar o perfil.");
+            }
+
+            var usuarioAtualizado =
+                await this.usuarioInterface.GetUsuarioById(usuarioId);
+
+            return Ok(usuarioAtualizado);
+        }
     }
 }

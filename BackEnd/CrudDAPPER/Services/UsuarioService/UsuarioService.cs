@@ -79,5 +79,27 @@ namespace CrudDAPPER.Services.LivroService
                 return await con.QueryAsync<Usuario>("select * from usuarios");
             }
         }
+
+        public async Task<bool> AtualizarPerfil(int usuarioId, Usuario usuario)
+        {
+            using (var con = new SqlConnection(getConnection))
+            {
+                var sql = @"UPDATE usuarios SET firstName = @firstName, lastName = @lastName, contacto1 = @contacto1, contacto2 = @contacto2, provincia = @provincia WHERE Id = @Id";
+
+                var parametros = new
+                {
+                    Id = usuarioId,
+                    usuario.firstName,
+                    usuario.lastName,
+                    usuario.contacto1,
+                    usuario.contacto2,
+                    usuario.provincia
+                };
+
+                var linhasAfetadas = await con.ExecuteAsync(sql, parametros);
+
+                return linhasAfetadas > 0;
+            }
+        }
     }
 }
