@@ -242,8 +242,10 @@ export default function UserProfilePanel({ user }: Props) {
 
           <Dropdown.Item id="new-team" textValue="Create Team" className="rounded-lg">
             <div className="flex w-full items-center gap-3 py-0.5">
+              <Link href="/usuarios/" className="flex w-full items-center gap-3 py-0.5">
               <Persons className="size-4 text-gray-500" />
-              <Label className="text-sm flex-1">Create Team</Label>
+              <Label className="text-sm flex-1">Usuarios</Label>
+              </Link>
             </div>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -267,114 +269,3 @@ export default function UserProfilePanel({ user }: Props) {
     </Dropdown>
   );
 }
-
-/*'use client';
-
-import React from 'react';
-import { ArrowRightFromSquare, Gear, Persons } from "@gravity-ui/icons";
-import { Avatar, Dropdown, Label } from "@heroui/react";
-import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
-import Link from 'next/link';
-import { Usuario } from '@/types/Usuario';
-
-interface Props {
-  user: Usuario;
-}
-
-export default function UserProfilePanel({ user }: Props) {
-  const userAvatar = (user.avatarUrl && user.avatarUrl.trim() !== '') 
-    ? user.avatarUrl 
-    : '/avatar.png';
-    const baseUrl = "http://localhost:5160";
-
-  return (
-    <Dropdown>
-      <Dropdown.Trigger className="rounded-full cursor-pointer outline-none">
-        <div className="px-3 pt-3 pb-1">
-        <div className="flex items-center gap-2">
-        <Avatar className="w-10 h-10 flex-shrink-0">
-          <Avatar.Image
-            alt={`${user.firstName} ${user.lastName}`}
-            src={`${baseUrl}${userAvatar?.trim() || "/avatar.png"}?t=${new Date().getTime()}`}
-            className="object-cover w-full h-full rounded-full"
-          />
-          <Avatar.Fallback delayMs={600}>
-            {user.firstName?.charAt(0) ?? 'U'}
-          </Avatar.Fallback>
-        </Avatar>
-        <div className="flex flex-col gap-0 overflow-hidden">
-          <p className="text-sm leading-5 font-medium truncate">{user.firstName} {user.lastName}</p>
-          <p className="text-xs leading-none text-muted truncate">{user.email}</p>
-        </div>
-        </div>
-      </div>
-      </Dropdown.Trigger>
-      
-      <Dropdown.Popover className="w-64 bg-white shadow-md border border-gray-200 rounded-lg">
-        <div className="px-3 pt-3 pb-1">
-          <div className="flex items-center gap-2">
-            <Avatar className="w-10 h-10 flex-shrink-0">
-              <Avatar.Image
-                alt={`${user.firstName} ${user.lastName}`}
-                src={`${baseUrl}${userAvatar?.trim() || "/avatar.png"}?t=${new Date().getTime()}`}
-                className="object-cover w-full h-full rounded-full"
-              />
-              <Avatar.Fallback delayMs={600}>
-                {user.firstName?.charAt(0) ?? 'U'}
-              </Avatar.Fallback>
-            </Avatar>
-            <div className="flex flex-col gap-0 overflow-hidden">
-              <p className="text-sm leading-5 font-medium truncate">{user.firstName} {user.lastName}</p>
-              <p className="text-xs leading-none text-muted truncate">{user.email}</p>
-            </div>
-          </div>
-        </div>
-
-        <Dropdown.Menu>
-          <Dropdown.Item id="dashboard" textValue="Dashboard">
-            <Label>Dashboard</Label>
-          </Dropdown.Item>
-
-          <Dropdown.Item id="profile" textValue="Profile">
-            <Link href="/user/profile" className="w-full block">
-              <Label>Perfil</Label>
-            </Link>
-          </Dropdown.Item>
-
-          <Dropdown.Item id="pedidos" textValue="Pedidos">
-            <Link href="/user/pedidos" className="w-full block">
-              <Label className="cursor-pointer">Pedidos</Label>
-            </Link>
-          </Dropdown.Item>
-
-          <Dropdown.Item id="properties" textValue="Properties">
-            <Link href="/user/properties" className="w-full block">
-              <Label>Propriedades</Label>
-            </Link>
-          </Dropdown.Item>
-
-          <Dropdown.Item id="settings" textValue="Settings">
-            <div className="flex w-full items-center justify-between gap-2">
-              <Label>Settings</Label>
-              <Gear className="size-3.5 text-muted" />
-            </div>
-          </Dropdown.Item>
-
-          <Dropdown.Item id="new-project" textValue="New project">
-            <div className="flex w-full items-center justify-between gap-2">
-              <Label>Create Team</Label>
-              <Persons className="size-3.5 text-muted" />
-            </div>
-          </Dropdown.Item>
-
-          <Dropdown.Item id="logout" textValue="Logout" variant="danger">
-            <LogoutLink className="flex w-full items-center justify-between gap-2 text-danger" color='danger'>
-              <Label className="cursor-pointer">Log Out</Label>
-              <ArrowRightFromSquare className="size-3.5" />
-            </LogoutLink>
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown.Popover>
-    </Dropdown>
-  );
-}*/
