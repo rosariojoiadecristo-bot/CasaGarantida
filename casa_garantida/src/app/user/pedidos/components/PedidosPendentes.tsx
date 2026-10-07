@@ -6,6 +6,7 @@ import { PedidoDetalhe } from "@/types/Pedido";
 import { aprovarPedido, rejeitarPedido } from "@/services/pedidoService";
 import { formatarData } from "@/utils/formatarData";
 import { Button } from "@heroui/button";
+import { redirect } from "next/navigation";
 
 interface PedidosPendentesProps {
   initialPedidos: PedidoDetalhe[];
@@ -128,6 +129,11 @@ export default function PedidosPendentes({
   } finally {
     setLoading(false);
   }
+  }
+
+  // 🔒 Bloqueia clientes (id = 3)
+  if (processadoPor === 3) {
+    redirect("/unauthorized");
   }
 
   return (

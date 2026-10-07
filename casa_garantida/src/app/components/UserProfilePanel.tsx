@@ -1,19 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  ArrowRightFromSquare,
-  Gear,
-  Persons,
-  House,
-  Person,
-  Bell,
-  ListCheck,
-} from "@gravity-ui/icons";
+import { ArrowRightFromSquare, Gear, Persons, House, Person, ListCheck } from "@gravity-ui/icons";
 import { Avatar, Dropdown, Label } from "@heroui/react";
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import Link from 'next/link';
 import { Usuario } from '@/types/Usuario';
+import { temPermissao } from '@/utils/permissoes';
 
 interface Props {
   user: Usuario;
@@ -23,10 +16,7 @@ export default function UserProfilePanel({ user }: Props) {
   const [pedidosPendentes, setPedidosPendentes] = useState(0);
   const [pedidosPendentesProprios, setPedidosPendentesProprios] = useState(0);
 
-  const userAvatar =
-    user.avatarUrl && user.avatarUrl.trim() !== ''
-      ? user.avatarUrl
-      : '/avatar.png';
+  const userAvatar = user.avatarUrl && user.avatarUrl.trim() !== '' ? user.avatarUrl : '/avatar.png';
 
   const baseUrl = "http://localhost:5160";
 
@@ -104,6 +94,14 @@ export default function UserProfilePanel({ user }: Props) {
   const nomeCompleto = `${user.firstName} ${user.lastName}`.trim();
   const inicial = user.firstName?.charAt(0)?.toUpperCase() ?? 'U';
 
+  // ... dentro do componente, onde tem acesso ao currentUser
+  const podeVerDashboard = temPermissao(user, "dashboard");
+  const podeVerPedidos = temPermissao(user, "pedidos");
+  const podeVerPedidosProprios = temPermissao(user, "pedidosProprios");
+  const podeVerPropriedades = temPermissao(user, "propriedades");
+  const podeVerMinhasPropriedades = temPermissao(user, "minhasPropriedades");
+  const podeVerUsuarios = temPermissao(user, "usuarios");
+
   return (
     <Dropdown>
       {/* ============ TRIGGER ============ */}
@@ -160,21 +158,26 @@ export default function UserProfilePanel({ user }: Props) {
 
         {/* Navegação principal */}
         <Dropdown.Menu className="p-1.5">
+          {podeVerDashboard && (
           <Dropdown.Item id="dashboard" textValue="Dashboard" className="rounded-lg">
             <Link href="/user/dashboard" className="flex w-full items-center gap-3 py-0.5">
               <House className="size-4 text-gray-500" />
               <Label className="cursor-pointer text-sm">Dashboard</Label>
             </Link>
           </Dropdown.Item>
-
-          <Dropdown.Item id="profile" textValue="Perfil" className="rounded-lg">
-            <Link href="/user/profile" className="flex w-full items-center gap-3 py-0.5">
-              <Person className="size-4 text-gray-500" />
-              <Label className="cursor-pointer text-sm">Perfil</Label>
+          )}
+          
+          {podeVerMinhasPropriedades && (
+          <Dropdown.Item id="minhasPropriedades" textValue="Propriedades" className="rounded-lg">
+            <Link href="/user/minhasPropriedades" className="flex w-full items-center gap-3 py-0.5">
+              <House className="size-4 text-gray-500" />
+              <Label className="cursor-pointer text-sm">Minhas Propriedades</Label>
             </Link>
           </Dropdown.Item>
+          )}
 
           {/* Pedidos Globais (admin) */}
+          {podeVerPedidos && (
           <Dropdown.Item id="pedidos" textValue="Pedidos" className="rounded-lg">
             <Link href="/user/pedidos" className="flex w-full items-center gap-3 py-0.5">
               <ListCheck className="size-4 text-gray-500" />
@@ -190,8 +193,10 @@ export default function UserProfilePanel({ user }: Props) {
               )}
             </Link>
           </Dropdown.Item>
+          )}
 
           {/* 🔹 Pedidos do próprio utilizador */}
+          {podeVerPedidosProprios && (
           <Dropdown.Item id="pedidosProprios" textValue="PedidosProprios" className="rounded-lg">
             <Link
               href="/user/pedidosProprios"
@@ -212,20 +217,23 @@ export default function UserProfilePanel({ user }: Props) {
               )}
             </Link>
           </Dropdown.Item>
+          )}
 
+          <Dropdown.Item id="profile" textValue="Perfil" className="rounded-lg">
+            <Link href="/user/profile" className="flex w-full items-center gap-3 py-0.5">
+              <Person className="size-4 text-gray-500" />
+              <Label className="cursor-pointer text-sm">Perfil</Label>
+            </Link>
+          </Dropdown.Item>
+
+           {podeVerPropriedades && (
           <Dropdown.Item id="properties" textValue="Propriedades" className="rounded-lg">
             <Link href="/user/properties" className="flex w-full items-center gap-3 py-0.5">
               <House className="size-4 text-gray-500" />
               <Label className="cursor-pointer text-sm">Propriedades</Label>
             </Link>
           </Dropdown.Item>
-
-          <Dropdown.Item id="minhasPropriedades" textValue="Propriedades" className="rounded-lg">
-            <Link href="/user/minhasPropriedades" className="flex w-full items-center gap-3 py-0.5">
-              <House className="size-4 text-gray-500" />
-              <Label className="cursor-pointer text-sm">Minhas Propriedades</Label>
-            </Link>
-          </Dropdown.Item>
+           )}
         </Dropdown.Menu>
 
         {/* Separador */}
@@ -233,13 +241,7 @@ export default function UserProfilePanel({ user }: Props) {
 
         {/* Configurações / equipa */}
         <Dropdown.Menu className="p-1.5">
-          <Dropdown.Item id="settings" textValue="Settings" className="rounded-lg">
-            <div className="flex w-full items-center gap-3 py-0.5">
-              <Gear className="size-4 text-gray-500" />
-              <Label className="text-sm flex-1">Settings</Label>
-            </div>
-          </Dropdown.Item>
-
+          {podeVerUsuarios && (
           <Dropdown.Item id="new-team" textValue="Create Team" className="rounded-lg">
             <div className="flex w-full items-center gap-3 py-0.5">
               <Link href="/usuarios/" className="flex w-full items-center gap-3 py-0.5">
@@ -248,6 +250,7 @@ export default function UserProfilePanel({ user }: Props) {
               </Link>
             </div>
           </Dropdown.Item>
+          )}
         </Dropdown.Menu>
 
         {/* Separador */}

@@ -6,6 +6,7 @@ import { PedidoDetalhe } from "@/types/Pedido";
 import { cancelarPedido } from "@/services/pedidoService";
 import { formatarData } from "@/utils/formatarData";
 import { Button } from "@heroui/button";
+import { redirect } from "next/navigation";
 
 interface PedidosPendentesPropriosProps {
   initialPedidos: PedidoDetalhe[];
@@ -80,6 +81,11 @@ export default function PedidosPendentesProprios({
     } finally {
       setLoading(false);
     }
+  }
+
+  // 🔒 Bloqueia clientes (id = 3)
+  if (usuarioId === 1 || usuarioId === 2) {
+    redirect("/unauthorized");
   }
 
   return (

@@ -49,6 +49,11 @@ export default async function UsuariosPage() {
   // Ordem de exibição dos grupos
   const ordemTipos = [1, 2, 3];
 
+  // 🔒 Bloqueia clientes (id = 3)
+  if (currentUser.tipoUsuarioId === 3) {
+    redirect("/unauthorized");
+  }
+
   return (
     <main className="p-6 max-w-4xl mx-auto space-y-8">
       <h1 className="text-2xl font-bold">Lista de Usuários por Categoria</h1>
@@ -104,7 +109,7 @@ export default async function UsuariosPage() {
                         {usuario.firstName} {usuario.lastName}
                       </h3>
                       <p className="text-sm text-gray-600">{usuario.email}</p>
-                      <span className="text-xs text-gray-400">ID: #{usuario.id} - </span>
+                      {/*<span className="text-xs text-gray-400">ID: #{usuario.id}</span>*/}
                       <span className="text-xs text-gray-400">Contacto: {usuario.contacto1}</span>
                       <UsuarioActions usuario={usuario} currentUser={currentUser} />
                     </div>

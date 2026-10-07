@@ -10,7 +10,7 @@ import Location from './Location';
 import Features from './Features';
 import Picture from './Picture';
 import Contact from './Contact';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { Propriedade } from '@/types/Propriedade';
 
@@ -226,6 +226,11 @@ const AddPropertyForm = ({ isEdit = false, property, currentUserId, ...props }: 
     }
     }
   };
+
+  // 🔒 Bloqueia clientes (id = 3)
+  if (currentUserId === 3 || currentUserId === 2) {
+    redirect("/unauthorized");
+  }
  
   return (
     <div>

@@ -1,18 +1,16 @@
-import {
-  getKindeServerSession,
-} from "@kinde-oss/kinde-auth-nextjs/server";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { redirect } from "next/navigation";
+import Dashboard from "./components/Dashboard";
 
-import { getPedidosPendentesPorUsuario } from "@/services/pedidoService";
-import { PedidoDetalhe } from "@/types/Pedido";
-import PedidosPendentesProprios from "./components/PedidosPendentesProprios";
-
-interface UsuarioBanco {
+interface Usuario {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
+  avatarUrl?: string;
+  contacto1?: number | null;
+  tipoUsuarioId: number; // 1 = Administrador, 2 = Gestor, 3 = Cliente
 }
 
 export default async function PedidosPropriosPage() {
@@ -34,11 +32,7 @@ export default async function PedidosPropriosPage() {
 
   if (!response.ok) redirect("/unauthorized");
 
-  const usuarioBanco: UsuarioBanco = await response.json();
+  const usuarioBanco: Usuario = await response.json();
 
-  // 🔹 Só os pendentes DESTE utilizador
-  const pedidos: PedidoDetalhe[] =
-    await getPedidosPendentesPorUsuario(usuarioBanco.id);
-
-  return <PedidosPendentesProprios initialPedidos={pedidos} usuarioId={usuarioBanco.id}/>;
+  return <Dashboard  currentUser={usuarioBanco}/>;
 }
