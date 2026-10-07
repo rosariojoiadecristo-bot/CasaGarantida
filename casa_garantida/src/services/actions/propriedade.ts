@@ -32,27 +32,3 @@ export async function deleteProperty(id: number) {
 
   return await response.json();
 }
-
-/*export async function deleteProperty(id: number) {
-    const API_URL =
-        process.env.NEXT_PUBLIC_API_URL ||
-        "http://localhost:5160/api";
-
-    const response = await fetch(
-        `${API_URL}/Propriedade/${id}`,
-        {
-            method: "DELETE",
-            cache: "no-store",
-        }
-    );
-
-    if (!response.ok) {
-        const errorText = await response.text();
-
-        throw new Error(
-            errorText || "Não foi possível eliminar a propriedade."
-        );
-    }
-
-    return await response.json();
-}*/
