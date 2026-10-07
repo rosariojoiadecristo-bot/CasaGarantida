@@ -178,6 +178,19 @@ namespace CrudDAPPER.Controllers
             }
         }
 
+        [HttpGet("disponiveis")]
+        public async Task<ActionResult<IEnumerable<Propriedade>>> GetAllPropriedadeDisponivel()
+        {
+            IEnumerable<Propriedade> propriedades = await this.propriedadeInterface.GetAllPropriedadeDisponivel();
+
+            if (!propriedades.Any())
+            {
+                return NotFound("Nenhuma propriedade disponível localizada");
+            }
+
+            return Ok(propriedades);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePropriedade(int id)
         {

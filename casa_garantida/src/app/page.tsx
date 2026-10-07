@@ -1,8 +1,8 @@
-import { getPropriedade } from "@/services/propriedadeService";
 import { Propriedade } from "@/types/Propriedade";
 import PropertyCard from "./components/PropertyCard";
 import Link from "next/link";
 import Search from "./components/Search";
+import { getPropriedadesDisponiveis } from "@/services/propriedadeService";
 
 type SearchParams = Promise<{
   page?: string;
@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
   const pageSize = 9;
 
-  const propriedades: Propriedade[] = await getPropriedade();
+  const propriedades: Propriedade[] = await getPropriedadesDisponiveis();
 
   // 🔍 Filtragem combinada (AND): cada critério só filtra se tiver valor
   const filteredProperties = propriedades.filter((property) => {

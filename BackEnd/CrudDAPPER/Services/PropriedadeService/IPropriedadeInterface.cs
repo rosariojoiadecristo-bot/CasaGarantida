@@ -11,5 +11,6 @@ namespace CrudDAPPER.Services.PropriedadeService
         Task<IEnumerable<Propriedade>> UpdatePropriedade(Propriedade propriedade);
         Task<bool> DeletePropriedade(int propriedadeId);
         Task<IEnumerable<Propriedade>> GetPropriedadesByLocatarioId(int locatarioId);
+        Task<IEnumerable<Propriedade>> GetAllPropriedadeDisponivel();
     }
 }

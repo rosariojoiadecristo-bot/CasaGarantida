@@ -287,5 +287,32 @@ namespace CrudDAPPER.Services.PropriedadeService
 
             return propriedades;
         }
+
+        public async Task<IEnumerable<Propriedade>> GetAllPropriedadeDisponivel()
+        {
+            using (var con = new SqlConnection(getConnection))
+            {
+                var sql = @"
+            SELECT p.*, t.*, s.* 
+            FROM propriedade p 
+            LEFT JOIN PropriedadeTipo t ON p.TypeId = t.Id 
+            LEFT JOIN PropriedadeStatus s ON p.StatusId = s.Id
+            WHERE s.Value = @Status";
+
+                var propriedades = await con.QueryAsync<Propriedade, PropriedadeTipo, PropriedadeStatus, Propriedade>(
+                    sql,
+                    (propriedade, tipo, status) =>
+                    {
+                        propriedade.Tipo = tipo;
+                        propriedade.Status = status;
+                        return propriedade;
+                    },
+                    new { Status = "Disponível" },
+                    splitOn: "Id,Id"
+                );
+
+                return propriedades;
+            }
+        }
     }
 }
