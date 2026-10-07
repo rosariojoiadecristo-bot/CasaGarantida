@@ -18,7 +18,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
   // 🔍 Filtrar propriedades pelo nome (com base no 'query')
   const filteredProperties = propriedades.filter((property) =>
-    property.provincia?.toLowerCase().includes(searchQuery.toLowerCase())
+    property.localizacao?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Cálculos de paginação baseados nos itens filtrados
@@ -51,7 +51,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
           <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
             <p className="text-gray-500 text-lg">
               {searchQuery 
-                ? `Nenhuma propriedade encontrada com o nome "${searchQuery}".` 
+                ? `Nenhuma propriedade encontrada na localidade "${searchQuery}".` 
                 : "Nenhuma propriedade encontrada no momento."}
             </p>
           </div>

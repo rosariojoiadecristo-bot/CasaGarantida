@@ -28,9 +28,9 @@ export default function PropertyCard({ property }: Props) {
         )}
         
         {/* Badge de Estado opcional */}
-        {property.estado && (
+        {property.tipo?.value && (
           <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700 shadow-sm">
-            {property.estado}
+            {property.tipo.value}
           </span>
         )}
       </div>
@@ -40,9 +40,9 @@ export default function PropertyCard({ property }: Props) {
         <h2 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1">
           {property.name}
         </h2>
-        
+
         <p className="text-gray-500 text-sm mb-4 line-clamp-2">
-          {property.descricao || "Sem descrição informada."}
+          {property.provincia} - {property.localizacao}
         </p>
 
         <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
