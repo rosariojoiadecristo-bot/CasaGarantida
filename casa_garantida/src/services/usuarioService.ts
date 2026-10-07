@@ -36,10 +36,6 @@ export interface AtualizarPerfilData {
 
 }
 
-
-/**
- * Atualizar perfil do usuário
- */
 export async function atualizarPerfil(
     usuarioId: number,
     dados: AtualizarPerfilData
@@ -73,4 +69,30 @@ export async function atualizarPerfil(
 
 
     return await response.json();
+}
+
+export async function promoverParaGestor(usuarioId: number): Promise<Usuario> {
+  const response = await fetch(`${API_URL}/Usuario/${usuarioId}/promover`, {
+    method: 'PUT',
+  });
+
+  if (!response.ok) {
+    const mensagem = await response.text();
+    throw new Error(mensagem || 'Erro ao promover utilizador.');
+  }
+
+  return await response.json();
+}
+
+export async function rebaixarParaCliente(usuarioId: number): Promise<Usuario> {
+  const response = await fetch(`${API_URL}/Usuario/${usuarioId}/rebaixar`, {
+    method: 'PUT',
+  });
+
+  if (!response.ok) {
+    const mensagem = await response.text();
+    throw new Error(mensagem || 'Erro ao rebaixar utilizador.');
+  }
+
+  return await response.json();
 }

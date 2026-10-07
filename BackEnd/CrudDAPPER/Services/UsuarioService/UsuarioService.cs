@@ -101,5 +101,29 @@ namespace CrudDAPPER.Services.LivroService
                 return linhasAfetadas > 0;
             }
         }
+
+        public async Task<bool> AtualizarTipoUsuario(int usuarioId, int novoTipoUsuarioId)
+        {
+            using (var con = new SqlConnection(getConnection))
+            {
+                // Só permite tipos válidos: 1 = Administrador, 2 = Gestor, 3 = Cliente
+                if (novoTipoUsuarioId < 1 || novoTipoUsuarioId > 3)
+                {
+                    return false;
+                }
+
+                var sql = @"UPDATE usuarios 
+                    SET tipoUsuarioId = @TipoUsuarioId 
+                    WHERE Id = @Id";
+
+                var linhasAfetadas = await con.ExecuteAsync(sql, new
+                {
+                    Id = usuarioId,
+                    TipoUsuarioId = novoTipoUsuarioId
+                });
+
+                return linhasAfetadas > 0;
+            }
+        }
     }
 }

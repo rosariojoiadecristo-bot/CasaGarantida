@@ -182,5 +182,57 @@ namespace CrudDAPPER.Controllers
 
             return Ok(usuarioAtualizado);
         }
+
+        [HttpPut("{usuarioId}/promover")]
+        public async Task<IActionResult> PromoverParaGestor(int usuarioId)
+        {
+            var usuario = await this.usuarioInterface.GetUsuarioById(usuarioId);
+
+            if (usuario == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            if (usuario.TipoUsuarioId != 3)
+            {
+                return BadRequest("Apenas clientes podem ser promovidos a gestor.");
+            }
+
+            var atualizado = await this.usuarioInterface.AtualizarTipoUsuario(usuarioId, 2);
+
+            if (!atualizado)
+            {
+                return BadRequest("Não foi possível promover o utilizador.");
+            }
+
+            var usuarioAtualizado = await this.usuarioInterface.GetUsuarioById(usuarioId);
+            return Ok(usuarioAtualizado);
+        }
+
+        [HttpPut("{usuarioId}/rebaixar")]
+        public async Task<IActionResult> RebaixarParaCliente(int usuarioId)
+        {
+            var usuario = await this.usuarioInterface.GetUsuarioById(usuarioId);
+
+            if (usuario == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            if (usuario.TipoUsuarioId != 2)
+            {
+                return BadRequest("Apenas gestores podem ser rebaixados a cliente.");
+            }
+
+            var atualizado = await this.usuarioInterface.AtualizarTipoUsuario(usuarioId, 3);
+
+            if (!atualizado)
+            {
+                return BadRequest("Não foi possível rebaixar o utilizador.");
+            }
+
+            var usuarioAtualizado = await this.usuarioInterface.GetUsuarioById(usuarioId);
+            return Ok(usuarioAtualizado);
+        }
     }
 }

@@ -1,4 +1,7 @@
 import { getUsuarios } from "@/services/usuarioService";
+import UsuarioActions from "../components/UsuarioActions";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
 interface Usuario {
   id: number;
@@ -18,6 +21,20 @@ const TIPOS_USUARIO: Record<number, { titulo: string; corBadge: string }> = {
 };
 
 export default async function UsuariosPage() {
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const authenticated = await isAuthenticated();
+  const kindeUser = await getUser();
+  if (!kindeUser?.email) redirect("/unauthorized");
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5160/api";
+
+  // Buscar usuário da nossa base SQL Server
+  const response = await fetch(
+    `${API_URL}/Usuario/by-email?email=${encodeURIComponent(kindeUser.email)}`,
+    { cache: "no-store" }
+  );
+
+  const currentUser : Usuario = await response.json();
+
   const usuarios: Usuario[] = await getUsuarios();
   const baseUrl = "http://localhost:5160";
 
@@ -89,6 +106,7 @@ export default async function UsuariosPage() {
                       <p className="text-sm text-gray-600">{usuario.email}</p>
                       <span className="text-xs text-gray-400">ID: #{usuario.id} - </span>
                       <span className="text-xs text-gray-400">Contacto: {usuario.contacto1}</span>
+                      <UsuarioActions usuario={usuario} currentUser={currentUser} />
                     </div>
                   </div>
                 );

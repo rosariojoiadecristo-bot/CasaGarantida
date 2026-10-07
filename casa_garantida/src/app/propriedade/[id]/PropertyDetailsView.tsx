@@ -29,6 +29,7 @@ export default function PropertyDetailsView({ property, currentUser }: Props) {
             <PropriedadeImagesSlider images={property.imagensList || []} />
             <h2 className="text-2xl font-bold text-gray-700 mt-7">
               {new Intl.NumberFormat("pt-AO", { style: "currency", currency: "AOA" }).format(property.preco)}
+              {isAluguel ? " Mensal " : " "}
               / {property.status?.value || "Indisponível"}
             </h2>
             <p className="text-sm text-slate-600 mt-7">{property.descricao}</p>
@@ -53,10 +54,12 @@ export default function PropertyDetailsView({ property, currentUser }: Props) {
 
             {/* Só mostra os botões se houver um usuário logado */}
             {currentUser ? (
-              <div className="mt-8 pt-4 border-t border-gray-100 flex flex-col gap-3">
+              currentUser.tipoUsuarioId == 3 ? (
+                <div className="mt-8 pt-4 border-t border-gray-100 flex flex-col gap-3">
                 {isVenda && (<RequestPropertyButton propriedadeId={property.id} usuarioId={currentUser.id} tipo="Compra"/>)}
                 {isAluguel && (<RequestPropertyButton propriedadeId={property.id} usuarioId={currentUser.id} tipo="Aluguel"/>)}
               </div>
+              ) : null
             ) : (
               <div className="mt-8 pt-4 border-t border-gray-100 text-center">
                 <LoginLink className="text-primary font-semibold underline">
