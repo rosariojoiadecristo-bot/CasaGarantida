@@ -36,7 +36,7 @@ const SignInPanel = async () => {
       firstName: user.given_name ?? '',
       lastName: user.family_name ?? '',
       email: user.email,
-      TipoUsuarioId: 3, // 3 = Cliente por padrão
+      tipoUsuarioId: 3, // 3 = Cliente por padrão
       avatarUrl: user.picture ?? '',
     };
 
